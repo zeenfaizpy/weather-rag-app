@@ -18,7 +18,7 @@ ollama pull llama3.2:1b
 git clone https://github.com/zeenfaizpy/weather-rag-app
 cd weather-rag-app
 uv sync
-uv run main.py
+uv run init_db.py
 uv run streamlit run app.py
 ```
 
