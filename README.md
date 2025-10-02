@@ -5,12 +5,21 @@
 
 1. Install Ollama ( to run llm locally )
 2. Pull the required LLM models
+3. Install [UV](https://docs.astral.sh/uv/)
+
+### Setup
 
 ```bash
 
 ollama pull embeddinggemma
 ollama pull llama3.2:1b
 
+
+git clone https://github.com/zeenfaizpy/weather-rag-app
+cd weather-rag-app
+uv sync
+uv run main.py
+uv run streamlit run app.py
 ```
 
 ### Tech Stack
