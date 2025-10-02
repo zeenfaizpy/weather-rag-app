@@ -3,7 +3,10 @@ from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_core.documents import Document
 
 
-def load_and_chunk_csv(file_path: str, chunk_size: int = 1000, chunk_overlap: int = 200):
+def load_and_chunk_csv(file_path: str):
+    """
+    Load the CSV file and returns the chunk of documents with metadata
+    """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The csv file was not found at: {file_path}")
 

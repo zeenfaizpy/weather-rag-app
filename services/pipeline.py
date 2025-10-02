@@ -11,6 +11,9 @@ VECTOR_DB_DIR = "vector_db/chroma_db"
 
 
 def init_vector_store():
+    """
+    Initialize the Vector DB ( Chroma DB ) and ingest the chuncked csv docs
+    """
     if os.path.exists(VECTOR_DB_DIR) and os.listdir(VECTOR_DB_DIR):
         print("Vector DB already exists")
     else:
@@ -25,6 +28,9 @@ def init_vector_store():
 
 
 def get_weather_qa_chain():
+    """
+    Creates a conversational retrieval QA chain for weather related questions.
+    """
     if not os.path.exists(VECTOR_DB_DIR) or not os.listdir(VECTOR_DB_DIR):
         raise RuntimeError("Vector DB not found")
     

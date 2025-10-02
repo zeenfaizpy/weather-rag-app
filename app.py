@@ -2,12 +2,13 @@ import streamlit as st
 from langchain_core.messages import HumanMessage
 from services.pipeline import get_weather_qa_chain
 
-
+# Streamlit Initialization
 st.set_page_config(page_title="Weather RAG App", layout="centered")
 st.title("Weather RAG App")
 st.markdown("Ask about weather data")
 
 
+# Initialize the weather RAG chain and chat history
 if "qa_chain" not in st.session_state:
     try:
         st.session_state.qa_chain = get_weather_qa_chain()
@@ -18,8 +19,7 @@ if "qa_chain" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-
-
+# Display the chat messages in user and assistant modes
 for message in st.session_state.chat_history:
     if isinstance(message, HumanMessage):
         with st.chat_message("user"):
