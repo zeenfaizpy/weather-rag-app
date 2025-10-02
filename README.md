@@ -33,7 +33,7 @@ uv run streamlit run app.py
 
 ```bash
 
-uv run main.py
+uv run init_db.py
 
 ```
 

@@ -1,6 +1,6 @@
 import streamlit as st
-from langchain_core.messages import HumanMessage
-from services.pipeline import get_weather_qa_chain
+from langchain_core.messages import SystemMessage, HumanMessage
+from services.pipeline import get_weather_rag_chain
 
 # Streamlit Initialization
 st.set_page_config(page_title="Weather RAG App", layout="centered")
@@ -9,9 +9,9 @@ st.markdown("Ask about weather data")
 
 
 # Initialize the weather RAG chain and chat history
-if "qa_chain" not in st.session_state:
+if "rag_chain" not in st.session_state:
     try:
-        st.session_state.qa_chain = get_weather_qa_chain()
+        st.session_state.rag_chain = get_weather_rag_chain()
     except RuntimeError as e:
         st.error(str(e))
         st.stop()
@@ -33,17 +33,17 @@ if user_query := st.chat_input("Ask a question about the weather data..."):
     with st.chat_message("user"):
         st.markdown(user_query)
 
-    with st.spinner("Thinking... Please wait"):
+    with st.spinner("Thinking..."):
         try:
-            response = st.session_state.qa_chain.invoke(
-                {"question": user_query, "chat_history": st.session_state.chat_history}
+            response = st.session_state.rag_chain.invoke(
+                {"input": user_query, "chat_history": st.session_state.chat_history}
             )
             ai_response = response["answer"]
             st.session_state.chat_history.append(HumanMessage(content=user_query))
-            st.session_state.chat_history.append(response["chat_history"][-1])
+            st.session_state.chat_history.append(ai_response)
 
         except Exception as e:
-            ai_response = f"An error occurred: {e}"
+            ai_response = SystemMessage(content=f"An error occurred: {e}")
             st.error(ai_response)
 
     with st.chat_message("assistant"):
